@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "elstnet"
+version = "0.1.0"
+description = "Event-triggered motion-aligned state-space video stylization"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "torch>=2.2", "torchvision>=0.17", "numpy>=1.24", "Pillow>=10",
+    "opencv-python>=4.8", "PyYAML>=6", "scipy>=1.10", "tqdm>=4.66"
+]
+
+[project.optional-dependencies]
+metrics = ["lpips>=0.1.4", "pytorch-fid>=0.3.0"]
+download = ["huggingface_hub>=0.25"]
+dev = ["pytest>=8", "ruff>=0.7"]
+
+[project.scripts]
+elst = "elstnet.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["elstnet*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100

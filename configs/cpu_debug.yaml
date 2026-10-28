@@ -1,0 +1,40 @@
+# Small models keep local debugging practical without a compiled CUDA scan.
+model:
+  widths: [8, 12, 16]
+  state_size: 4
+  rank: 2
+  keyframe_interval: 2
+  threshold: 0.5
+  tile_size: 2
+  halo: 1
+  flow_backend: farneback
+  pretrained_flow: false
+  scan_backend: torch
+  mode: full
+
+data:
+  wiki_root: data/wikiart-general
+  wiki_manifest: data/manifests/wikiart.csv
+  video_root: data/DAVIS
+  video_manifest: data/manifests/davis.csv
+  clip_length: 2
+  stride: 2
+  size: 32
+  style_split: train
+
+train:
+  batch_size: 1
+  workers: 0
+  max_steps: 2
+  learning_rate: 0.0002
+  weight_decay: 0.01
+  gradient_clip: 1.0
+  deterministic: false
+
+loss_weights:
+  content: 1.0
+  style: 10.0
+  temporal: 5.0
+  phase: 2.0
+  cycle: 1.0
+  gate: 0.01

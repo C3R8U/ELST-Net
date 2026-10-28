@@ -1,0 +1,40 @@
+# Channel widths balance the three pyramid scales against desktop GPU memory.
+model:
+  widths: [64, 96, 128]
+  state_size: 16
+  rank: 4
+  keyframe_interval: 8
+  threshold: 0.5
+  tile_size: 8
+  halo: 2
+  flow_backend: raft
+  pretrained_flow: true
+  scan_backend: mamba
+  mode: full
+
+data:
+  wiki_root: data/wikiart-general
+  wiki_manifest: data/manifests/wikiart.csv
+  video_root: data/DAVIS
+  video_manifest: data/manifests/davis.csv
+  clip_length: 8
+  stride: 4
+  size: 256
+  style_split: train
+
+train:
+  batch_size: 1
+  workers: 4
+  max_steps: 100000
+  learning_rate: 0.0002
+  weight_decay: 0.01
+  gradient_clip: 1.0
+  deterministic: false
+
+loss_weights:
+  content: 1.0
+  style: 10.0
+  temporal: 5.0
+  phase: 2.0
+  cycle: 1.0
+  gate: 0.01
